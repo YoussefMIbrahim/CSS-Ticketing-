@@ -16,11 +16,12 @@ public class Ticket {
     private Date date;
 
 
-    Ticket (String clientName, String email,String model,String description,Date date){
+    Ticket (String clientName, String email,String model,String description,String memberName,Date date){
         this.clientName = clientName;
         this.email = email;
         this.model = model;
         this.description = description;
+        this.memberName = memberName;
         this.date =  date;
 
     }

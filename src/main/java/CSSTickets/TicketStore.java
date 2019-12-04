@@ -1,5 +1,6 @@
 package CSSTickets;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,8 +19,8 @@ public class TicketStore {
 
             String createTable = "CREATE TABLE IF NOT EXISTS tickets(" +
                     "clientName TEXT NOT NULL," +
-                    "starID TEXT," +
-                    "email TEXT NOT NULL," +
+                    "starID TEXT UNIQUE ," +
+                    "email TEXT NOT NULL UNIQUE ," +
                     "phoneNumber INTEGER," +
                     "model TEXT NOT NULL," +
                     "description TEXT NOT NULL," +
@@ -53,13 +54,14 @@ public class TicketStore {
                 String description = resultSet.getString("description");
                 String memberName = resultSet.getString("memberName");
                 String resolution = resultSet.getString("resolution");
-                Date date = resultSet.getDate("dateReported");
+                Date date = resultSet.getDate("dateReproted");
                 int rowID = resultSet.getInt("rowid");
 
-                Ticket ticket = new Ticket(clientName,email,model,description,date);
+                Ticket ticket = new Ticket(clientName,email,model,description,memberName,date);
                 ticket.setTicketId(rowID);
                 allTickets.add(ticket);
             }
+            System.out.println(allTickets);
 
             return allTickets;
 
