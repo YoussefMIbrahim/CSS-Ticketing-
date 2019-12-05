@@ -45,10 +45,9 @@ public class TicketGui extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         // todo possibly add newest to oldest in date, smae for name search
-        // todo adding a differnt window to view a full ticket
+        // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
-        // todo organize the ticket display so it looks nicer
-
+        // todo add  to a file so it's maybe printable
 
         List<String> searchByList = new ArrayList<>();
         searchByList.add("Name");
@@ -88,6 +87,8 @@ public class TicketGui extends JFrame {
 
     private void setTableData(List<Ticket> tickets){
 
+        tableModel.setRowCount(0);
+
         if (tickets != null){
             for (Ticket ticket :tickets){
                 tableModel.addRow( new Object[] {ticket.getTicketId(),ticket.getClientName(),ticket.getEmail(),
@@ -100,12 +101,6 @@ public class TicketGui extends JFrame {
         List<Ticket> tickets = controller.loadAllTicketsFromTicketStore();
 
         setTableData(tickets);
-
-    }
-    private void updateTable(Ticket ticket){
-
-        tableModel.addRow( new Object[] {ticket.getTicketId(),ticket.getClientName(),ticket.getEmail(),
-                ticket.getMemberName(),ticket.getDate()});
 
     }
 
@@ -130,13 +125,12 @@ public class TicketGui extends JFrame {
 
                 Ticket ticket =  new Ticket(clientName,email,machineModel,description,memberName,date);
                 controller.addTicket(ticket);
-                updateTable(ticket);
+                showAllTickets();
             }else{
                 Ticket ticket = new Ticket(clientName,email,machineModel,description,memberName,resolution,date);
                 controller.addTicket(ticket);
-                updateTable(ticket);
+                showAllTickets();
             }
-
 
         }
 
