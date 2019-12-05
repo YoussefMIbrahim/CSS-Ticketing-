@@ -1,6 +1,7 @@
 package CSSTickets;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,10 @@ public class TicketGui extends JFrame {
     private JButton searchButton;
     private JTextField searchByTextField;
     private JButton loadAllTicketsButton;
+    private JTable ticketTable;
 
     DefaultListModel<Ticket> listModel;
+    DefaultTableModel tableModel;
 
     private Controller controller;
 
@@ -42,6 +45,7 @@ public class TicketGui extends JFrame {
         // todo adding a differnt window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
         // todo organize the ticket display so it looks nicer
+        // todo use jtables cause they look good
 
         List<String> searchByList = new ArrayList<>();
         searchByList.add("Name");
@@ -60,22 +64,29 @@ public class TicketGui extends JFrame {
             orderByComboBox.addItem(term);
         }
 
-        listModel = new DefaultListModel<>();
-        ticketList.setModel(listModel);
-        ticketList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        tableModel = new DefaultTableModel();
+        ticketTable.setModel(tableModel);
+        ticketTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Client Name");
+        tableModel.addColumn("Email");
+        tableModel.addColumn("Club member");
+        tableModel.addColumn("Date");
+
+
 
         showAllTickets();
 
     }
 
 
-    private void setListData(List<Ticket> tickets){
-        // clearing list model and then looping over the list i got and adding it to my model
-        listModel.clear();
+    private void setTableData(List<Ticket> tickets){
 
         if (tickets != null){
             for (Ticket ticket :tickets){
-                listModel.addElement(ticket);
+                tableModel.addRow( new Object[] {ticket.getTicketId(),ticket.getClientName(),ticket.getEmail(),
+                        ticket.getMemberName(),ticket.getDate()});
             }
         }
     }
@@ -84,7 +95,7 @@ public class TicketGui extends JFrame {
     private void showAllTickets(){
         List<Ticket> tickets = controller.loadAllTicketsFromTicketStore();
 
-        setListData(tickets);
+        setTableData(tickets);
 
     }
 }

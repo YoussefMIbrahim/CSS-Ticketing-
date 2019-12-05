@@ -1,6 +1,7 @@
 package CSSTickets;
 
 import java.util.List;
+import java.util.Vector;
 
 public class Controller {
 
@@ -16,5 +17,10 @@ public class Controller {
 
         return allTickets;
 
+    }
+
+    protected Vector getColumnNames(){
+        Vector<String> colNames = store.getColumnNames();
+        return colNames;
     }
 }

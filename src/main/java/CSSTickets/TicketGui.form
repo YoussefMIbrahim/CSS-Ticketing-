@@ -216,7 +216,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="b2e66" class="javax.swing.JList" binding="ticketList">
+                  <component id="4c936" class="javax.swing.JTable" binding="ticketTable">
                     <constraints/>
                     <properties/>
                   </component>

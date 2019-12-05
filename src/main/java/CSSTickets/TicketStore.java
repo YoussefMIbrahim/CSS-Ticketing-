@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class TicketStore {
 
@@ -69,5 +70,17 @@ public class TicketStore {
             System.err.println("Could not get all tickets because " + sqle);
             return null;
         }
+    }
+
+    public Vector getColumnNames(){
+        Vector<String> clNames = new Vector<>();
+
+        clNames.add("ID");
+        clNames.add("Client Name");
+        clNames.add("Email");
+        clNames.add("Club Member");
+        clNames.add("Date");
+
+        return clNames;
     }
 }
