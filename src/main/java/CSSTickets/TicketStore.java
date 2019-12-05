@@ -72,15 +72,26 @@ public class TicketStore {
         }
     }
 
-    public Vector getColumnNames(){
-        Vector<String> clNames = new Vector<>();
+    public void addNewTicket(Ticket newTicket) throws SQLException{
 
-        clNames.add("ID");
-        clNames.add("Client Name");
-        clNames.add("Email");
-        clNames.add("Club Member");
-        clNames.add("Date");
+        long date = newTicket.getDate().getTime();
 
-        return clNames;
+        String insertSQL ="INSERT INTO tickets VALUES (?,?,?,?,?,?,?,?,?)";
+
+        Connection connection= DriverManager.getConnection(dbUri);
+        PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
+
+
+        preparedStatement.setString(1, newTicket.getClientName());
+        preparedStatement.setString(2,newTicket.getStarId());
+        preparedStatement.setString(3,newTicket.getEmail());
+        preparedStatement.setInt(4, newTicket.getPhoneNumber());
+        preparedStatement.setString(5,newTicket.getModel());
+        preparedStatement.setString(6,newTicket.getDescription());
+        preparedStatement.setString(7,newTicket.getMemberName());
+        preparedStatement.setString(8,newTicket.getResolution());
+        preparedStatement.setLong(9,date);
+        preparedStatement.execute();
+        connection.close();
     }
 }

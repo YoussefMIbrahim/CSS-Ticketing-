@@ -23,7 +23,17 @@ public class Ticket {
         this.description = description;
         this.memberName = memberName;
         this.date =  date;
+    }
 
+
+    Ticket (String clientName, String email,String model,String description,String memberName,String resolution,Date date){
+        this.clientName = clientName;
+        this.email = email;
+        this.model = model;
+        this.description = description;
+        this.memberName = memberName;
+        this.resolution = resolution;
+        this.date =  date;
     }
 
     public int getTicketId() {

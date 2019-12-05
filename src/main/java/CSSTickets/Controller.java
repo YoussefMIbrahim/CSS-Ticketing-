@@ -1,5 +1,6 @@
 package CSSTickets;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 
@@ -19,8 +20,17 @@ public class Controller {
 
     }
 
-    protected Vector getColumnNames(){
-        Vector<String> colNames = store.getColumnNames();
-        return colNames;
+    protected boolean addTicket(Ticket newTicket){
+
+        try{
+            store.addNewTicket(newTicket);
+            return true;
+
+        }catch (SQLException sqle){
+            return false;
+        }
+
     }
+
+
 }
