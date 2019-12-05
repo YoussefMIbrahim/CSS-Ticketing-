@@ -47,7 +47,34 @@ public class TicketGui extends JFrame {
         // todo possibly add newest to oldest in date, smae for name search
         // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
-        // todo add  to a file so it's maybe printable
+        // todo add to a file so it's maybe printable
+        // todo possibly add description and resolution to the jtable display
+
+
+        populateComboBoxes();
+
+        tableModel = new DefaultTableModel();
+        ticketTable.setModel(tableModel);
+        ticketTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Client Name");
+        tableModel.addColumn("Email");
+        tableModel.addColumn("Club member");
+        tableModel.addColumn("Date");
+
+        showAllTickets();
+
+        submitButton.addActionListener(e -> {
+            addNewTicket();
+        });
+
+        loadAllTicketsButton.addActionListener(e -> {
+            showAllTickets();
+        });
+
+    }
+
+    private void populateComboBoxes() {
 
         List<String> searchByList = new ArrayList<>();
         searchByList.add("Name");
@@ -65,23 +92,6 @@ public class TicketGui extends JFrame {
         for (String term: orderByList){
             orderByComboBox.addItem(term);
         }
-
-
-        tableModel = new DefaultTableModel();
-        ticketTable.setModel(tableModel);
-        ticketTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableModel.addColumn("ID");
-        tableModel.addColumn("Client Name");
-        tableModel.addColumn("Email");
-        tableModel.addColumn("Club member");
-        tableModel.addColumn("Date");
-
-        showAllTickets();
-
-        submitButton.addActionListener(e -> {
-            addNewTicket();
-        });
-
     }
 
 
@@ -121,13 +131,17 @@ public class TicketGui extends JFrame {
             JOptionPane.showMessageDialog(this,"Please fill out all the required fields.");
         }else{
 
+
+
             if (resolution.isEmpty()){
 
                 Ticket ticket =  new Ticket(clientName,email,machineModel,description,memberName,date);
+                ticket.setStarId(starID);
                 controller.addTicket(ticket);
                 showAllTickets();
             }else{
                 Ticket ticket = new Ticket(clientName,email,machineModel,description,memberName,resolution,date);
+                ticket.setStarId(starID);
                 controller.addTicket(ticket);
                 showAllTickets();
             }
