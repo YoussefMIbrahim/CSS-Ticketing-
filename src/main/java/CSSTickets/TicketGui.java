@@ -47,7 +47,41 @@ public class TicketGui extends JFrame {
         // todo possibly add newest to oldest in date, smae for name search
         // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
-        // todo add  to a file so it's maybe printable
+        // todo save to a file so it's maybe printable
+        // todo possibly add description and resolution to the jtable display
+        // todo make the search by description into a general search by
+
+
+        populateComboBoxes();
+
+        tableModel = new DefaultTableModel();
+        ticketTable.setModel(tableModel);
+        ticketTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Client Name");
+        tableModel.addColumn("Email");
+        tableModel.addColumn("Club member");
+        tableModel.addColumn("Date");
+
+        showAllTickets();
+
+        submitButton.addActionListener(e -> {
+            addNewTicket();
+        });
+
+        loadAllTicketsButton.addActionListener(e -> {
+            showAllTickets();
+        });
+
+        searchButton.addActionListener(e -> {
+            if(searchByComboBox.getSelectedItem() == "Description"){
+                searchByDescription();
+            }
+        });
+
+    }
+
+    private void populateComboBoxes() {
 
         List<String> searchByList = new ArrayList<>();
         searchByList.add("Name");
@@ -65,25 +99,7 @@ public class TicketGui extends JFrame {
         for (String term: orderByList){
             orderByComboBox.addItem(term);
         }
-
-
-        tableModel = new DefaultTableModel();
-        ticketTable.setModel(tableModel);
-        ticketTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableModel.addColumn("ID");
-        tableModel.addColumn("Client Name");
-        tableModel.addColumn("Email");
-        tableModel.addColumn("Club member");
-        tableModel.addColumn("Date");
-
-        showAllTickets();
-
-        submitButton.addActionListener(e -> {
-            addNewTicket();
-        });
-
     }
-
 
     private void setTableData(List<Ticket> tickets){
 
@@ -121,18 +137,34 @@ public class TicketGui extends JFrame {
             JOptionPane.showMessageDialog(this,"Please fill out all the required fields.");
         }else{
 
+
+
             if (resolution.isEmpty()){
 
                 Ticket ticket =  new Ticket(clientName,email,machineModel,description,memberName,date);
+                ticket.setStarId(starID);
                 controller.addTicket(ticket);
                 showAllTickets();
             }else{
                 Ticket ticket = new Ticket(clientName,email,machineModel,description,memberName,resolution,date);
+                ticket.setStarId(starID);
                 controller.addTicket(ticket);
                 showAllTickets();
             }
 
         }
 
+    }
+
+    private void searchByDescription(){
+        String searchTerm = searchByTextField.getText();
+        List<Ticket> matchingTickets = controller.searchByDescription(searchTerm);
+
+        if (matchingTickets.size() < 1){
+            JOptionPane.showMessageDialog(this,"No matches found");
+
+        }else{
+            setTableData(matchingTickets);
+        }
     }
 }

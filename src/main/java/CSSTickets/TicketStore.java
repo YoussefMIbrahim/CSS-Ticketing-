@@ -95,5 +95,23 @@ public class TicketStore {
         connection.close();
     }
 
+    public List<Ticket> searchByDescription(String description) {
+
+
+        List<Ticket> allTickets = getAllTickets();
+        List<Ticket> matchingTickets = new ArrayList<>();
+
+
+        for (Ticket ticket : allTickets) {
+            if (ticket.getDescription().toLowerCase().contains(description.toLowerCase())) {
+
+                matchingTickets.add(ticket);
+            }
+        }
+        // returning the matching list
+        return matchingTickets;
+
+
+    }
 
 }
