@@ -95,23 +95,53 @@ public class TicketStore {
         connection.close();
     }
 
-    public List<Ticket> searchByDescription(String description) {
+    public List<Ticket> searchByCategory(String searchTerm, String category) {
 
 
         List<Ticket> allTickets = getAllTickets();
         List<Ticket> matchingTickets = new ArrayList<>();
 
+        if (category == "Description") {
+            for (Ticket ticket : allTickets) {
+                if (ticket.getDescription().toLowerCase().contains(searchTerm.toLowerCase())) {
 
-        for (Ticket ticket : allTickets) {
-            if (ticket.getDescription().toLowerCase().contains(description.toLowerCase())) {
-
-                matchingTickets.add(ticket);
+                    matchingTickets.add(ticket);
+                }
             }
+            // returning the matching list
+            return matchingTickets;
+        }else if (category == "Name"){
+            for (Ticket ticket : allTickets) {
+                if (ticket.getClientName().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    matchingTickets.add(ticket);
+                }
+            }
+            return matchingTickets;
+        }else{
+            for (Ticket ticket : allTickets) {
+                if (ticket.getStarId().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    matchingTickets.add(ticket);
+                }
+            }
+            return matchingTickets;
+
         }
-        // returning the matching list
-        return matchingTickets;
 
+    }
 
+    public void deleteTicket(Ticket ticket){
+
+        String query = "DELETE FROM tickets WHERE rowid = ?";
+
+        try(Connection connection = DriverManager.getConnection(dbUri);
+        PreparedStatement preparedStatement = connection.prepareStatement(query)){
+
+            preparedStatement.setInt(1,ticket.getTicketId());
+            preparedStatement.execute();
+
+        }catch (SQLException sqle){
+            System.err.println("could not delete because "+ sqle);
+        }
     }
 
 }

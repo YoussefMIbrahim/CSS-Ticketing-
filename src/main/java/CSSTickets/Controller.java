@@ -32,9 +32,13 @@ public class Controller {
 
     }
 
-    protected List<Ticket> searchByDescription(String searchTerm){
-        List<Ticket> matchingTickets = store.searchByDescription(searchTerm);
+    protected List<Ticket> searchByCategory(String searchTerm, String searchCategory){
+        List<Ticket> matchingTickets = store.searchByCategory(searchTerm,searchCategory);
         return matchingTickets;
+    }
+
+    protected void deleteTicket(Ticket ticket){
+        store.deleteTicket(ticket);
     }
 
 
