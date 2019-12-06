@@ -32,5 +32,10 @@ public class Controller {
 
     }
 
+    protected List<Ticket> searchByDescription(String searchTerm){
+        List<Ticket> matchingTickets = store.searchByDescription(searchTerm);
+        return matchingTickets;
+    }
+
 
 }

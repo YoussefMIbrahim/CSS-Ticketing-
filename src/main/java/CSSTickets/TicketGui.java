@@ -72,6 +72,12 @@ public class TicketGui extends JFrame {
             showAllTickets();
         });
 
+        searchButton.addActionListener(e -> {
+            if(searchByComboBox.getSelectedItem() == "Description"){
+                searchByDescription();
+            }
+        });
+
     }
 
     private void populateComboBoxes() {
@@ -93,7 +99,6 @@ public class TicketGui extends JFrame {
             orderByComboBox.addItem(term);
         }
     }
-
 
     private void setTableData(List<Ticket> tickets){
 
@@ -148,5 +153,17 @@ public class TicketGui extends JFrame {
 
         }
 
+    }
+
+    private void searchByDescription(){
+        String searchTerm = searchByTextField.getText();
+        List<Ticket> matchingTickets = controller.searchByDescription(searchTerm);
+
+        if (matchingTickets.size() < 1){
+            JOptionPane.showMessageDialog(this,"No matches found");
+
+        }else{
+            setTableData(matchingTickets);
+        }
     }
 }
