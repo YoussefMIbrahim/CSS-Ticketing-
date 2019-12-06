@@ -3,6 +3,8 @@ package CSSTickets;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -20,7 +22,6 @@ public class TicketGui extends JFrame {
     private JTextField memberTextField;
     private JButton submitButton;
     private JComboBox searchByComboBox;
-    private JList<Ticket> ticketList;
     private JComboBox orderByComboBox;
     private JButton searchButton;
     private JTextField searchByTextField;
@@ -44,12 +45,14 @@ public class TicketGui extends JFrame {
         setPreferredSize(new Dimension(1000,1000));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        // todo possibly add newest to oldest in date, smae for name search
+        // todo possibly add newest to oldest in date, same for name search
         // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
-        // todo possibly add description and resolution to the jtable display
-        // todo make the search by description into a general search by
+        // todo possibly add description and resolution to the jTable display
+        // todo figure out what's wrong with star id search
+        // todo figure out how to make right click select an row
+        // todo add stuff to the edit button in right click menu
 
 
         populateComboBoxes();
@@ -64,6 +67,7 @@ public class TicketGui extends JFrame {
         tableModel.addColumn("Date");
 
         showAllTickets();
+        mouseListenerStuff();
 
         submitButton.addActionListener(e -> {
             addNewTicket();
@@ -75,7 +79,11 @@ public class TicketGui extends JFrame {
 
         searchButton.addActionListener(e -> {
             if(searchByComboBox.getSelectedItem() == "Description"){
-                searchByDescription();
+                searchByCategory("Description");
+            }else if (searchByComboBox.getSelectedItem() == "Name"){
+                searchByCategory("Name");
+            }else{
+                searchByCategory("Star ID");
             }
         });
 
@@ -137,8 +145,6 @@ public class TicketGui extends JFrame {
             JOptionPane.showMessageDialog(this,"Please fill out all the required fields.");
         }else{
 
-
-
             if (resolution.isEmpty()){
 
                 Ticket ticket =  new Ticket(clientName,email,machineModel,description,memberName,date);
@@ -156,9 +162,9 @@ public class TicketGui extends JFrame {
 
     }
 
-    private void searchByDescription(){
+    private void searchByCategory(String category){
         String searchTerm = searchByTextField.getText();
-        List<Ticket> matchingTickets = controller.searchByDescription(searchTerm);
+        List<Ticket> matchingTickets = controller.searchByCategory(searchTerm,category);
 
         if (matchingTickets.size() < 1){
             JOptionPane.showMessageDialog(this,"No matches found");
@@ -167,4 +173,70 @@ public class TicketGui extends JFrame {
             setTableData(matchingTickets);
         }
     }
-}
+
+    private void mouseListenerStuff(){
+
+        JPopupMenu rightClickMenu = new JPopupMenu();
+        //creating the menu items and then adding them to each menu
+
+        JMenuItem deleteMenuItem = new JMenuItem("Delete");
+        JMenuItem editMenuItem = new JMenuItem("Edit");
+
+        rightClickMenu.add(deleteMenuItem);
+        rightClickMenu.add(editMenuItem);
+        // assigning the menus to their correct lists
+
+        ticketTable.setComponentPopupMenu(rightClickMenu);
+        // adding action listeners to the menu items
+
+        deleteMenuItem.addActionListener(e -> {
+
+        });
+
+        editMenuItem.addActionListener(e -> {
+
+        });
+
+
+        //mouse listeners for both lists
+        // i had to add the code under mouse pressed for it to work properly on my machine
+
+
+
+        ticketTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selection = ticketTable.rowAtPoint(e.getPoint());
+                ticketTable.setEditingRow(selection);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int selection = ticketTable.rowAtPoint(e.getPoint());
+                ticketTable.setEditingRow(selection);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                int selection = ticketTable.rowAtPoint(e.getPoint());
+                ticketTable.setEditingRow(selection);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                int selection = ticketTable.rowAtPoint(e.getPoint());
+                ticketTable.setEditingRow(selection);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                int selection = ticketTable.rowAtPoint(e.getPoint());
+                ticketTable.setEditingRow(selection);
+
+            }
+        });
+    }
+
+    }
+
