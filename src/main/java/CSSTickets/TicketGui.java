@@ -47,8 +47,9 @@ public class TicketGui extends JFrame {
         // todo possibly add newest to oldest in date, smae for name search
         // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
-        // todo add to a file so it's maybe printable
+        // todo save to a file so it's maybe printable
         // todo possibly add description and resolution to the jtable display
+        // todo make the search by description into a general search by
 
 
         populateComboBoxes();
