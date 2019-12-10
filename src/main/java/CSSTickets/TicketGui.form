@@ -20,7 +20,7 @@
           <grid id="d448f" layout-manager="GridLayoutManager" row-count="9" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Untitled"/>
+              <tabbedpane title="Submit Ticket"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -168,7 +168,7 @@
           <grid id="7c675" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Tickets"/>
+              <tabbedpane title="Ticket Viewer"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -226,6 +226,14 @@
                   </component>
                 </children>
               </scrollpane>
+              <component id="2033a" class="javax.swing.JButton" binding="saveChangesButton" default-binding="true">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Save Changes"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

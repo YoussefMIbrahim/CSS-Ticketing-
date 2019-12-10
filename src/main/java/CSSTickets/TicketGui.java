@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Vector;
 
 
 public class TicketGui extends JFrame {
@@ -28,6 +29,7 @@ public class TicketGui extends JFrame {
     private JButton loadAllTicketsButton;
     private JTable ticketTable;
     private JTextArea resolutionTextArea;
+    private JButton saveChangesButton;
 
     DefaultListModel<Ticket> listModel;
     DefaultTableModel tableModel;
@@ -88,6 +90,10 @@ public class TicketGui extends JFrame {
             }
         });
 
+        saveChangesButton.addActionListener(e -> {
+            testGettingDataFromTAble();
+        });
+
     }
 
     private void populateComboBoxes() {
@@ -105,9 +111,6 @@ public class TicketGui extends JFrame {
             searchByComboBox.addItem(term);
         }
 
-        for (String term: orderByList){
-            orderByComboBox.addItem(term);
-        }
     }
 
     private void setTableData(List<Ticket> tickets){
@@ -180,8 +183,8 @@ public class TicketGui extends JFrame {
         JPopupMenu rightClickMenu = new JPopupMenu();
         //creating the menu items and then adding them to each menu
 
-        JMenuItem deleteMenuItem = new JMenuItem("Delete");
-        JMenuItem editMenuItem = new JMenuItem("Edit");
+        JMenuItem deleteMenuItem = new JMenuItem("Delete Row");
+        JMenuItem editMenuItem = new JMenuItem("View/Edit");
 
         rightClickMenu.add(deleteMenuItem);
         rightClickMenu.add(editMenuItem);
@@ -190,6 +193,7 @@ public class TicketGui extends JFrame {
         ticketTable.setComponentPopupMenu(rightClickMenu);
 
         deleteMenuItem.addActionListener(e -> {
+            deleteTableRow();
 
         });
 
@@ -236,6 +240,39 @@ public class TicketGui extends JFrame {
 
             }
         });
+    }
+
+    private void testGettingDataFromTAble(){
+
+        for (Vector row: tableModel.getDataVector()){
+            int id = (int) row.get(0);
+            String clientName = (String) row.get(1);
+            String email = (String) row.get(2);
+            String clubMember = (String) row.get(3);
+            Date date = (Date) row.get(4);
+
+            System.out.println(id+clientName+email+clubMember+date);
+
+        }
+
+    }
+
+    private void deleteTableRow(){
+
+        int selected = ticketTable.getSelectedRow();
+        int rowId = (int) ticketTable.getValueAt(selected,0);
+
+        if (selected == -1){
+            JOptionPane.showMessageDialog(this, "Select a row to delete");
+        }else {
+
+            if (JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this row?",
+                    "Delete",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+
+                tableModel.removeRow(selected);
+                controller.deleteTicket(rowId);
+            }
+        }
     }
 
     }
