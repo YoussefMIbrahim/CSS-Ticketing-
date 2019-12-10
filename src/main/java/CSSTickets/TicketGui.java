@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Vector;
 
 
 public class TicketGui extends JFrame {
@@ -28,6 +29,7 @@ public class TicketGui extends JFrame {
     private JButton loadAllTicketsButton;
     private JTable ticketTable;
     private JTextArea resolutionTextArea;
+    private JButton saveChangesButton;
 
     DefaultListModel<Ticket> listModel;
     DefaultTableModel tableModel;
@@ -42,15 +44,14 @@ public class TicketGui extends JFrame {
         setContentPane(mainPanel);
         pack();
         setVisible(true);
-        setPreferredSize(new Dimension(1000,1000));
+        setPreferredSize(new Dimension(500,500));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        // todo possibly add newest to oldest in date, same for name search
+
         // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
         // todo possibly add description and resolution to the jTable display
-        // todo figure out what's wrong with star id search
         // todo figure out how to make right click select an row
         // todo add stuff to the edit button in right click menu
 
@@ -59,6 +60,7 @@ public class TicketGui extends JFrame {
 
         tableModel = new DefaultTableModel();
         ticketTable.setModel(tableModel);
+        ticketTable.setAutoCreateRowSorter(true);
         ticketTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tableModel.addColumn("ID");
         tableModel.addColumn("Client Name");
@@ -83,8 +85,12 @@ public class TicketGui extends JFrame {
             }else if (searchByComboBox.getSelectedItem() == "Name"){
                 searchByCategory("Name");
             }else{
-                searchByCategory("Star ID");
+                searchByCategory("Email");
             }
+        });
+
+        saveChangesButton.addActionListener(e -> {
+            testGettingDataFromTAble();
         });
 
     }
@@ -94,7 +100,7 @@ public class TicketGui extends JFrame {
         List<String> searchByList = new ArrayList<>();
         searchByList.add("Name");
         searchByList.add("Description");
-        searchByList.add("Star ID");
+        searchByList.add("Email");
 
         List<String> orderByList = new ArrayList<>();
         orderByList.add("Date");
@@ -104,9 +110,6 @@ public class TicketGui extends JFrame {
             searchByComboBox.addItem(term);
         }
 
-        for (String term: orderByList){
-            orderByComboBox.addItem(term);
-        }
     }
 
     private void setTableData(List<Ticket> tickets){
@@ -179,28 +182,23 @@ public class TicketGui extends JFrame {
         JPopupMenu rightClickMenu = new JPopupMenu();
         //creating the menu items and then adding them to each menu
 
-        JMenuItem deleteMenuItem = new JMenuItem("Delete");
-        JMenuItem editMenuItem = new JMenuItem("Edit");
+        JMenuItem deleteMenuItem = new JMenuItem("Delete Row");
+        JMenuItem editMenuItem = new JMenuItem("View/Edit");
 
         rightClickMenu.add(deleteMenuItem);
         rightClickMenu.add(editMenuItem);
-        // assigning the menus to their correct lists
+
 
         ticketTable.setComponentPopupMenu(rightClickMenu);
-        // adding action listeners to the menu items
 
         deleteMenuItem.addActionListener(e -> {
+            deleteTableRow();
 
         });
 
         editMenuItem.addActionListener(e -> {
 
         });
-
-
-        //mouse listeners for both lists
-        // i had to add the code under mouse pressed for it to work properly on my machine
-
 
 
         ticketTable.addMouseListener(new MouseListener() {
@@ -236,6 +234,39 @@ public class TicketGui extends JFrame {
 
             }
         });
+    }
+
+    private void testGettingDataFromTAble(){
+
+        for (Vector row: tableModel.getDataVector()){
+            int id = (int) row.get(0);
+            String clientName = (String) row.get(1);
+            String email = (String) row.get(2);
+            String clubMember = (String) row.get(3);
+            Date date = (Date) row.get(4);
+
+            System.out.println(id+clientName+email+clubMember+date);
+
+        }
+
+    }
+
+    private void deleteTableRow(){
+
+        int selected = ticketTable.getSelectedRow();
+        int rowId = (int) ticketTable.getValueAt(selected,0);
+
+        if (selected == -1){
+            JOptionPane.showMessageDialog(this, "Select a row to delete");
+        }else {
+
+            if (JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this row?",
+                    "Delete",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
+
+                tableModel.removeRow(selected);
+                controller.deleteTicket(rowId);
+            }
+        }
     }
 
     }

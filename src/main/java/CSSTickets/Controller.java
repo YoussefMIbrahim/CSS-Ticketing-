@@ -37,8 +37,8 @@ public class Controller {
         return matchingTickets;
     }
 
-    protected void deleteTicket(Ticket ticket){
-        store.deleteTicket(ticket);
+    protected void deleteTicket(int rowId){
+        store.deleteTicket(rowId);
     }
 
 

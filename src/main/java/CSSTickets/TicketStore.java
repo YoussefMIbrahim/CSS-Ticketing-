@@ -119,7 +119,7 @@ public class TicketStore {
             return matchingTickets;
         }else{
             for (Ticket ticket : allTickets) {
-                if (ticket.getStarId().toLowerCase().contains(searchTerm.toLowerCase())) {
+                if (ticket.getEmail().toLowerCase().contains(searchTerm.toLowerCase())) {
                     matchingTickets.add(ticket);
                 }
             }
@@ -129,14 +129,14 @@ public class TicketStore {
 
     }
 
-    public void deleteTicket(Ticket ticket){
+    public void deleteTicket(int rowId){
 
         String query = "DELETE FROM tickets WHERE rowid = ?";
 
         try(Connection connection = DriverManager.getConnection(dbUri);
         PreparedStatement preparedStatement = connection.prepareStatement(query)){
 
-            preparedStatement.setInt(1,ticket.getTicketId());
+            preparedStatement.setInt(1,rowId);
             preparedStatement.execute();
 
         }catch (SQLException sqle){
