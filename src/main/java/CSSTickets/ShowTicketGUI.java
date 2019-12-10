@@ -41,7 +41,8 @@ public class ShowTicketGUI extends JFrame{
     private void getDataForTicket(){
         int rowId = ticketGui.getSelectedRowId();
         Ticket ticket = controller.getTicketById(rowId);
-        System.out.println(ticket);
+
+
         clientNameTextField.setText(ticket.getClientName());
         starIdTextField.setText(ticket.getStarId());
         emailTextField.setText(ticket.getEmail());
@@ -49,6 +50,7 @@ public class ShowTicketGUI extends JFrame{
         deviceModelTextField.setText(ticket.getModel());
         descriptionTextArea.setText(ticket.getDescription());
         clubMemberNameTextField.setText(ticket.getMemberName());
+        resolutionTextArea.setText(ticket.getResolution());
 
     }
 }

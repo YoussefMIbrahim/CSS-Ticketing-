@@ -31,7 +31,7 @@ public class TicketGui extends JFrame {
     private JTextArea resolutionTextArea;
     private JButton saveChangesButton;
 
-    DefaultListModel<Ticket> listModel;
+
     DefaultTableModel tableModel;
 
     private Controller controller;
@@ -51,8 +51,6 @@ public class TicketGui extends JFrame {
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
         // todo possibly add description and resolution to the jTable display
-        // todo figure out how to make right click select an row
-        // todo add stuff to the edit button in right click menu
         // todo add validation for input
         // todo add validation for mouse input
         // todo clear fields after entering a new ticket
@@ -75,6 +73,7 @@ public class TicketGui extends JFrame {
 
         submitButton.addActionListener(e -> {
             addNewTicket();
+
         });
 
         loadAllTicketsButton.addActionListener(e -> {
@@ -137,7 +136,7 @@ public class TicketGui extends JFrame {
         String clientName = clientNameTextField.getText();
         String starID = starIdTextField.getText();
         String email = emailTextField.getText();
-//        int phoneNumber = phoneNumberTextField.getText();
+        String phoneNumber = phoneNumberTextField.getText();
         String machineModel= machineTextField.getText();
         String description = descriptionTextArea.getText();
         String memberName = memberTextField.getText();
@@ -161,7 +160,18 @@ public class TicketGui extends JFrame {
                 showAllTickets();
             }
 
+
+            clientNameTextField.setText("");
+            starIdTextField.setText("");
+            emailTextField.setText("");
+            phoneNumberTextField.setText("");
+            machineTextField.setText("");
+            descriptionTextArea.setText("");
+            memberTextField.setText("");
+            resolutionTextArea.setText("");
+            JOptionPane.showMessageDialog(this,"Ticket added successfully");
         }
+
 
     }
 
