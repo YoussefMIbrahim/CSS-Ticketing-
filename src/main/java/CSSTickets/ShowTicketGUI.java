@@ -2,7 +2,7 @@ package CSSTickets;
 
 import javax.swing.*;
 
-public class testFrame {
+public class ShowTicketGUI extends JFrame{
     private JPanel mainPanel;
     private JTextField clientNameTextField;
     private JTextField starIdTextField;
@@ -14,4 +14,6 @@ public class testFrame {
     private JButton exitButton;
     private JButton saveAndExitButton;
     private JTextField clubMemberNameTextField;
+
+
 }

@@ -93,6 +93,7 @@ public class TicketGui extends JFrame {
             testGettingDataFromTAble();
         });
 
+
     }
 
     private void populateComboBoxes() {
@@ -261,6 +262,11 @@ public class TicketGui extends JFrame {
                 controller.deleteTicket(rowId);
             }
         }
+    }
+
+    private void newFramePopup(){
+        ShowTicketGUI showTicket = new ShowTicketGUI(TicketGui.this);
+
     }
 
     }
