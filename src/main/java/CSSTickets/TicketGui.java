@@ -44,15 +44,14 @@ public class TicketGui extends JFrame {
         setContentPane(mainPanel);
         pack();
         setVisible(true);
-        setPreferredSize(new Dimension(1000,1000));
+        setPreferredSize(new Dimension(500,500));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        // todo possibly add newest to oldest in date, same for name search
+
         // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
         // todo possibly add description and resolution to the jTable display
-        // todo figure out what's wrong with star id search
         // todo figure out how to make right click select an row
         // todo add stuff to the edit button in right click menu
 
