@@ -86,7 +86,7 @@ public class TicketGui extends JFrame {
             }else if (searchByComboBox.getSelectedItem() == "Name"){
                 searchByCategory("Name");
             }else{
-                searchByCategory("Star ID");
+                searchByCategory("Email");
             }
         });
 
@@ -101,7 +101,7 @@ public class TicketGui extends JFrame {
         List<String> searchByList = new ArrayList<>();
         searchByList.add("Name");
         searchByList.add("Description");
-        searchByList.add("Star ID");
+        searchByList.add("Email");
 
         List<String> orderByList = new ArrayList<>();
         orderByList.add("Date");
@@ -200,11 +200,6 @@ public class TicketGui extends JFrame {
         editMenuItem.addActionListener(e -> {
 
         });
-
-
-        //mouse listeners for both lists
-        // i had to add the code under mouse pressed for it to work properly on my machine
-
 
 
         ticketTable.addMouseListener(new MouseListener() {

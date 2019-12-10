@@ -119,7 +119,7 @@ public class TicketStore {
             return matchingTickets;
         }else{
             for (Ticket ticket : allTickets) {
-                if (ticket.getStarId().toLowerCase().contains(searchTerm.toLowerCase())) {
+                if (ticket.getEmail().toLowerCase().contains(searchTerm.toLowerCase())) {
                     matchingTickets.add(ticket);
                 }
             }
