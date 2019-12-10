@@ -8,7 +8,7 @@ public class Ticket {
     private String clientName;
     private String starId;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String model;
     private String description;
     private String memberName;
@@ -29,6 +29,19 @@ public class Ticket {
     Ticket (String clientName, String email,String model,String description,String memberName,String resolution,Date date){
         this.clientName = clientName;
         this.email = email;
+        this.model = model;
+        this.description = description;
+        this.memberName = memberName;
+        this.resolution = resolution;
+        this.date =  date;
+    }
+
+    Ticket (String clientName,String starId, String email,String phoneNumber,String model,String description,
+            String memberName,String resolution,Date date){
+        this.clientName = clientName;
+        this.starId = starId;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.model = model;
         this.description = description;
         this.memberName = memberName;
@@ -68,11 +81,11 @@ public class Ticket {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

@@ -48,12 +48,14 @@ public class TicketGui extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-        // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
         // todo possibly add description and resolution to the jTable display
         // todo figure out how to make right click select an row
         // todo add stuff to the edit button in right click menu
+        // todo add validation for input
+        // todo add validation for mouse input
+        // todo clear fields after entering a new ticket
 
 
         populateComboBoxes();
@@ -195,6 +197,7 @@ public class TicketGui extends JFrame {
         });
 
         editMenuItem.addActionListener(e -> {
+            newFramePopup();
 
         });
 
@@ -265,9 +268,18 @@ public class TicketGui extends JFrame {
     }
 
     private void newFramePopup(){
-        ShowTicketGUI showTicket = new ShowTicketGUI(TicketGui.this);
+
+        ShowTicketGUI showTicket = new ShowTicketGUI(TicketGui.this,controller,TicketGui.this);
+
+
 
     }
 
+    public int getSelectedRowId(){
+        int selected = ticketTable.getSelectedRow();
+        int rowId = (int) ticketTable.getValueAt(selected,0);
+        return rowId;
     }
+    }
+
 
