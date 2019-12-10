@@ -42,9 +42,9 @@ public class TicketGui extends JFrame {
 
         setTitle("Computer Software Support Ticket System");
         setContentPane(mainPanel);
-        pack();
         setVisible(true);
         setPreferredSize(new Dimension(500,500));
+        pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
@@ -204,8 +204,10 @@ public class TicketGui extends JFrame {
         ticketTable.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
                 int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
+                ticketTable.setRowSelectionInterval(selection -1 , selection);
+
             }
 
             @Override
