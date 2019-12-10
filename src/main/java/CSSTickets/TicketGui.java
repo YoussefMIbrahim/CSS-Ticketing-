@@ -102,9 +102,6 @@ public class TicketGui extends JFrame {
         searchByList.add("Description");
         searchByList.add("Email");
 
-        List<String> orderByList = new ArrayList<>();
-        orderByList.add("Date");
-        orderByList.add("Name");
 
         for (String term: searchByList){
             searchByComboBox.addItem(term);
@@ -205,32 +202,29 @@ public class TicketGui extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
+                ticketTable.setRowSelectionInterval(selection -1 , selection);
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
+                ticketTable.setRowSelectionInterval(selection -1 , selection);
+
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
+
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
+
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
 
             }
         });
