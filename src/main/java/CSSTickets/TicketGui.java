@@ -42,9 +42,9 @@ public class TicketGui extends JFrame {
 
         setTitle("Computer Software Support Ticket System");
         setContentPane(mainPanel);
-        pack();
         setVisible(true);
-        setPreferredSize(new Dimension(500,500));
+        setPreferredSize(new Dimension(800,500));
+        pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
