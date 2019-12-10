@@ -59,6 +59,7 @@ public class TicketGui extends JFrame {
 
         tableModel = new DefaultTableModel();
         ticketTable.setModel(tableModel);
+        ticketTable.setAutoCreateRowSorter(true);
         ticketTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tableModel.addColumn("ID");
         tableModel.addColumn("Client Name");
@@ -184,10 +185,9 @@ public class TicketGui extends JFrame {
 
         rightClickMenu.add(deleteMenuItem);
         rightClickMenu.add(editMenuItem);
-        // assigning the menus to their correct lists
+
 
         ticketTable.setComponentPopupMenu(rightClickMenu);
-        // adding action listeners to the menu items
 
         deleteMenuItem.addActionListener(e -> {
 
