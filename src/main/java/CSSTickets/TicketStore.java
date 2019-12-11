@@ -20,7 +20,7 @@ public class TicketStore {
 
             String createTable = "CREATE TABLE IF NOT EXISTS tickets(" +
                     "clientName TEXT NOT NULL," +
-                    "starID TEXT UNIQUE ," +
+                    "starID TEXT ," +
                     "email TEXT NOT NULL UNIQUE ," +
                     "phoneNumber TEXT," +
                     "model TEXT NOT NULL," +
@@ -200,7 +200,7 @@ public class TicketStore {
 
             System.out.println(ticket);
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
 
         }catch (SQLException sqle){
