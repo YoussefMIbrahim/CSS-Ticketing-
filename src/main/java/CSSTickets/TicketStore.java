@@ -193,14 +193,18 @@ public class TicketStore {
             preparedStatement.setString(2,ticket.getStarId());
             preparedStatement.setString(3,ticket.getEmail());
             preparedStatement.setString(4,ticket.getPhoneNumber());
-            preparedStatement.setString(5,ticket.getDescription());
-            preparedStatement.setString(6,ticket.getMemberName());
-            preparedStatement.setString(7,ticket.getResolution());
-            preparedStatement.setInt(8,ticket.getTicketId());
+            preparedStatement.setString(5,ticket.getModel());
+            preparedStatement.setString(6,ticket.getDescription());
+            preparedStatement.setString(7,ticket.getMemberName());
+            preparedStatement.setString(8,ticket.getResolution());
+            preparedStatement.setInt(9,ticket.getTicketId());
+
+
 
             System.out.println(ticket);
 
-            preparedStatement.executeUpdate();
+            int rowModified = preparedStatement.executeUpdate();
+            System.out.println(rowModified);
 
 
         }catch (SQLException sqle){
