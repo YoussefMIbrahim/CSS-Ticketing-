@@ -41,5 +41,10 @@ public class Controller {
         store.deleteTicket(rowId);
     }
 
+    protected Ticket getTicketById(int rowId){
+        Ticket ticket = store.getTicketById(rowId);
+        return ticket;
+    }
+
 
 }

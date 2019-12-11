@@ -22,7 +22,7 @@ public class TicketStore {
                     "clientName TEXT NOT NULL," +
                     "starID TEXT UNIQUE ," +
                     "email TEXT NOT NULL UNIQUE ," +
-                    "phoneNumber INTEGER," +
+                    "phoneNumber TEXT," +
                     "model TEXT NOT NULL," +
                     "description TEXT NOT NULL," +
                     "memberName TEXT NOT NULL," +
@@ -50,7 +50,7 @@ public class TicketStore {
                 String clientName = resultSet.getString("clientName");
                 String starID = resultSet.getString("starID");
                 String email = resultSet.getString("email");
-                int phoneNumber = resultSet.getInt("phoneNumber");
+                String  phoneNumber = resultSet.getString("phoneNumber");
                 String model = resultSet.getString("model");
                 String description = resultSet.getString("description");
                 String memberName = resultSet.getString("memberName");
@@ -85,7 +85,7 @@ public class TicketStore {
         preparedStatement.setString(1, newTicket.getClientName());
         preparedStatement.setString(2,newTicket.getStarId());
         preparedStatement.setString(3,newTicket.getEmail());
-        preparedStatement.setInt(4, newTicket.getPhoneNumber());
+        preparedStatement.setString(4, newTicket.getPhoneNumber());
         preparedStatement.setString(5,newTicket.getModel());
         preparedStatement.setString(6,newTicket.getDescription());
         preparedStatement.setString(7,newTicket.getMemberName());
@@ -141,6 +141,36 @@ public class TicketStore {
 
         }catch (SQLException sqle){
             System.err.println("could not delete because "+ sqle);
+        }
+    }
+
+    public Ticket getTicketById(int rowId){
+        String sqlQuery = "SELECT rowid, * FROM tickets WHERE rowid = ? ";
+
+        try(Connection connection = DriverManager.getConnection(dbUri);
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
+
+            preparedStatement.setInt(1,rowId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            String clientName = resultSet.getString("clientName");
+            String starID = resultSet.getString("starID");
+            String email = resultSet.getString("email");
+            String phoneNumber = resultSet.getString("phoneNumber");
+            String model = resultSet.getString("model");
+            String description = resultSet.getString("description");
+            String memberName = resultSet.getString("memberName");
+            String resolution = resultSet.getString("resolution");
+            Date date = resultSet.getDate("dateReproted");
+            int rowID = resultSet.getInt("rowid");
+
+            Ticket ticket = new Ticket(clientName,starID,email,phoneNumber,model,description,memberName,resolution,date);
+            ticket.setTicketId(rowID);
+
+            return ticket;
+        }catch (SQLException sqle){
+            System.err.println("could not execute query because "+ sqle);
+            return null;
         }
     }
 

@@ -31,7 +31,7 @@ public class TicketGui extends JFrame {
     private JTextArea resolutionTextArea;
     private JButton saveChangesButton;
 
-    DefaultListModel<Ticket> listModel;
+
     DefaultTableModel tableModel;
 
     private Controller controller;
@@ -43,17 +43,17 @@ public class TicketGui extends JFrame {
         setTitle("Computer Software Support Ticket System");
         setContentPane(mainPanel);
         setVisible(true);
-        setPreferredSize(new Dimension(500,500));
+        setPreferredSize(new Dimension(800,500));
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-        // todo adding a different window to view a full ticket
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
         // todo possibly add description and resolution to the jTable display
-        // todo figure out how to make right click select an row
-        // todo add stuff to the edit button in right click menu
+        // todo add validation for input
+        // todo add validation for mouse input
+        // todo clear fields after entering a new ticket
 
 
         populateComboBoxes();
@@ -73,6 +73,7 @@ public class TicketGui extends JFrame {
 
         submitButton.addActionListener(e -> {
             addNewTicket();
+
         });
 
         loadAllTicketsButton.addActionListener(e -> {
@@ -93,6 +94,7 @@ public class TicketGui extends JFrame {
             testGettingDataFromTAble();
         });
 
+
     }
 
     private void populateComboBoxes() {
@@ -102,9 +104,6 @@ public class TicketGui extends JFrame {
         searchByList.add("Description");
         searchByList.add("Email");
 
-        List<String> orderByList = new ArrayList<>();
-        orderByList.add("Date");
-        orderByList.add("Name");
 
         for (String term: searchByList){
             searchByComboBox.addItem(term);
@@ -137,7 +136,7 @@ public class TicketGui extends JFrame {
         String clientName = clientNameTextField.getText();
         String starID = starIdTextField.getText();
         String email = emailTextField.getText();
-//        int phoneNumber = phoneNumberTextField.getText();
+        String phoneNumber = phoneNumberTextField.getText();
         String machineModel= machineTextField.getText();
         String description = descriptionTextArea.getText();
         String memberName = memberTextField.getText();
@@ -161,7 +160,18 @@ public class TicketGui extends JFrame {
                 showAllTickets();
             }
 
+
+            clientNameTextField.setText("");
+            starIdTextField.setText("");
+            emailTextField.setText("");
+            phoneNumberTextField.setText("");
+            machineTextField.setText("");
+            descriptionTextArea.setText("");
+            memberTextField.setText("");
+            resolutionTextArea.setText("");
+            JOptionPane.showMessageDialog(this,"Ticket added successfully");
         }
+
 
     }
 
@@ -197,6 +207,7 @@ public class TicketGui extends JFrame {
         });
 
         editMenuItem.addActionListener(e -> {
+            newFramePopup();
 
         });
 
@@ -204,35 +215,30 @@ public class TicketGui extends JFrame {
         ticketTable.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int selection = ticketTable.rowAtPoint(e.getPoint());
+                ticketTable.setRowSelectionInterval(selection -1 , selection);
+            }
 
+            @Override
+            public void mousePressed(MouseEvent e) {
                 int selection = ticketTable.rowAtPoint(e.getPoint());
                 ticketTable.setRowSelectionInterval(selection -1 , selection);
 
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
-                int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
-            }
-
-            @Override
             public void mouseReleased(MouseEvent e) {
-                int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
+
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
+
 
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setEditingRow(selection);
 
             }
         });
@@ -271,5 +277,19 @@ public class TicketGui extends JFrame {
         }
     }
 
+    private void newFramePopup(){
+
+        ShowTicketGUI showTicket = new ShowTicketGUI(TicketGui.this,controller,TicketGui.this);
+
+
+
     }
+
+    public int getSelectedRowId(){
+        int selected = ticketTable.getSelectedRow();
+        int rowId = (int) ticketTable.getValueAt(selected,0);
+        return rowId;
+    }
+    }
+
 
