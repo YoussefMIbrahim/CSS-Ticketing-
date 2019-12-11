@@ -221,11 +221,13 @@ public class TicketGui extends JFrame {
 
         // clicking either delete or view/edit will call other methods
         deleteMenuItem.addActionListener(e -> {
+            // calling a method that deletes a row in the table
             deleteTableRow();
 
         });
 
         editMenuItem.addActionListener(e -> {
+            // calling a method that opens a new gui
             newFramePopup();
 
         });
