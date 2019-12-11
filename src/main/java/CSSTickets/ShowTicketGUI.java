@@ -13,7 +13,7 @@ public class ShowTicketGUI extends JFrame{
     private JTextArea descriptionTextArea;
     private JTextArea resolutionTextArea;
     private JButton exitButton;
-    private JButton saveAndExitButton;
+    private JButton saveChangesButton;
     private JTextField clubMemberNameTextField;
 
     private Controller controller;
@@ -29,16 +29,20 @@ public class ShowTicketGUI extends JFrame{
         setVisible(true);
         parentComponent.setEnabled(false);
 
-        getDataForTicket();
+        setDataForTicket();
         exitButton.addActionListener(e -> {
             parentComponent.setEnabled(true);
             dispose();
         });
 
+        saveChangesButton.addActionListener(e -> {
+
+        });
+
 
     }
 
-    private void getDataForTicket(){
+    private void setDataForTicket(){
         int rowId = ticketGui.getSelectedRowId();
         Ticket ticket = controller.getTicketById(rowId);
 

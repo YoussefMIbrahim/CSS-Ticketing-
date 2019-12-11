@@ -174,4 +174,36 @@ public class TicketStore {
         }
     }
 
+    public void updateTicket(Ticket ticket){
+
+        String sql = "UPDATE tickets SET clientName = ?," +
+                "starID = ?," +
+                "email = ?," +
+                "phoneNumber = ?," +
+                "model = ?," +
+                "description = ?," +
+                "memberName = ?," +
+                "resolution = ? WHERE rowid = ?";
+
+        try(Connection connection = DriverManager.getConnection(dbUri);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+
+            preparedStatement.setString(1,ticket.getClientName());;
+            preparedStatement.setString(2,ticket.getStarId());;
+            preparedStatement.setString(3,ticket.getEmail());
+            preparedStatement.setString(4,ticket.getPhoneNumber());
+            preparedStatement.setString(5,ticket.getDescription());
+            preparedStatement.setString(6,ticket.getMemberName());
+            preparedStatement.setString(7,ticket.getResolution());
+            preparedStatement.setInt(8,ticket.getTicketId());
+
+            preparedStatement.execute();
+
+
+        }catch (SQLException sqle){
+            System.err.println("could not complete action because " + sqle);
+
+        }
+    }
+
 }
