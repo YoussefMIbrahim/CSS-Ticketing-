@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Ticket {
 
+    // all the fields i will need for my ticket
     private int ticketId;
     private String clientName;
     private String starId;
@@ -15,7 +16,7 @@ public class Ticket {
     private String resolution;
     private Date date;
 
-
+// four constructors each for a specific situation of where the ticket is being used
     Ticket (String clientName, String email,String model,String description,String memberName,Date date){
         this.clientName = clientName;
         this.email = email;
@@ -142,6 +143,7 @@ public class Ticket {
         this.date = date;
     }
 
+    // to string method thats currently unused, might remove it
     public String toString(){
 
         String output = String.format("Id: %d, Client Name: %s, Email: %s, Club Member: %s Date: %s",
