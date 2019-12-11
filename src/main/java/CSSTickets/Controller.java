@@ -46,5 +46,9 @@ public class Controller {
         return ticket;
     }
 
+    protected void updateTicket(Ticket ticket){
+        store.updateTicket(ticket);
+    }
+
 
 }

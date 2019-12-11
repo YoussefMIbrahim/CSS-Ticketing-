@@ -49,6 +49,19 @@ public class Ticket {
         this.date =  date;
     }
 
+    Ticket (String clientName,String starId, String email,String phoneNumber,String model,String description,
+            String memberName,String resolution){
+        this.clientName = clientName;
+        this.starId = starId;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.model = model;
+        this.description = description;
+        this.memberName = memberName;
+        this.resolution = resolution;
+        this.date =  date;
+    }
+
     public int getTicketId() {
         return ticketId;
     }

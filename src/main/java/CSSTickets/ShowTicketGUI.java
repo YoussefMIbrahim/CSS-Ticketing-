@@ -13,7 +13,7 @@ public class ShowTicketGUI extends JFrame{
     private JTextArea descriptionTextArea;
     private JTextArea resolutionTextArea;
     private JButton exitButton;
-    private JButton saveAndExitButton;
+    private JButton saveChangesButton;
     private JTextField clubMemberNameTextField;
 
     private Controller controller;
@@ -29,16 +29,24 @@ public class ShowTicketGUI extends JFrame{
         setVisible(true);
         parentComponent.setEnabled(false);
 
-        getDataForTicket();
+        setDataForTicket();
         exitButton.addActionListener(e -> {
             parentComponent.setEnabled(true);
             dispose();
         });
 
+        saveChangesButton.addActionListener(e -> {
+
+            saveChanges();
+            parentComponent.setEnabled(true);
+            dispose();
+
+        });
+
 
     }
 
-    private void getDataForTicket(){
+    private void setDataForTicket(){
         int rowId = ticketGui.getSelectedRowId();
         Ticket ticket = controller.getTicketById(rowId);
 
@@ -51,6 +59,36 @@ public class ShowTicketGUI extends JFrame{
         descriptionTextArea.setText(ticket.getDescription());
         clubMemberNameTextField.setText(ticket.getMemberName());
         resolutionTextArea.setText(ticket.getResolution());
+
+    }
+
+    private void saveChanges() {
+
+        int rowId = ticketGui.getSelectedRowId();
+
+        String clientName = clientNameTextField.getText();
+        String starID = starIdTextField.getText();
+        String email = emailTextField.getText();
+        String phoneNumber = phoneNumberTextField.getText();
+        String machineModel = deviceModelTextField.getText();
+        String description = descriptionTextArea.getText();
+        String memberName = clubMemberNameTextField.getText();
+        String resolution = resolutionTextArea.getText();
+
+        if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
+                || memberName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please make sure the required fields are not empty");
+        } else {
+            if (JOptionPane.showConfirmDialog(this, "Are you sure you want to save these changes?",
+                    "Save", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+
+                Ticket ticket = new Ticket(clientName, starID, email, phoneNumber, machineModel, description, memberName, resolution);
+                ticket.setTicketId(rowId);
+
+                controller.updateTicket(ticket);
+
+            }
+        }
 
     }
 }
