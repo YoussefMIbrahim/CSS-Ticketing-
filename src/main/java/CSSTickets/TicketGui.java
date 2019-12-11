@@ -52,10 +52,7 @@ public class TicketGui extends JFrame {
 
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
-        // todo possibly add description and resolution to the jTable display
         // todo add validation for input
-        // todo add validation for mouse input
-        // todo clear fields after entering a new ticket
 
         // calling a bunch of mehtods that do things
         populateComboBoxes();
