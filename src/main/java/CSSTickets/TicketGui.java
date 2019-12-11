@@ -85,11 +85,6 @@ public class TicketGui extends JFrame {
             }
         });
 
-        saveChangesButton.addActionListener(e -> {
-            testGettingDataFromTAble();
-        });
-
-
     }
 
     private void configureTableModel() {
@@ -236,14 +231,20 @@ public class TicketGui extends JFrame {
         ticketTable.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                // added validation in case some weird things happen then making the selection
                 int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setRowSelectionInterval(selection -1 , selection);
+                if (selection != -1){
+                    ticketTable.setRowSelectionInterval(selection, selection);
+                }
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+                // added validation in case some weird things happen then making the selection
                 int selection = ticketTable.rowAtPoint(e.getPoint());
-                ticketTable.setRowSelectionInterval(selection -1 , selection);
+                if (selection != -1) {
+                    ticketTable.setRowSelectionInterval(selection, selection);
+                }
 
             }
 
@@ -265,7 +266,9 @@ public class TicketGui extends JFrame {
         });
     }
 
+    // getting all the data from the table itself, currently an unsused method and unlikely to be used
     private void testGettingDataFromTAble(){
+
 
         for (Vector row: tableModel.getDataVector()){
             int id = (int) row.get(0);
@@ -282,16 +285,18 @@ public class TicketGui extends JFrame {
 
     private void deleteTableRow(){
 
+        // getting selected row and getting the first value at that row
         int selected = ticketTable.getSelectedRow();
         int rowId = (int) ticketTable.getValueAt(selected,0);
 
+        // making sure a row is selected
         if (selected == -1){
             JOptionPane.showMessageDialog(this, "Select a row to delete");
         }else {
-
+            // asking confirmation if the user wants to delete the row
             if (JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this row?",
                     "Delete",JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
-
+                // deleting row, and calling controller to delete ticket
                 tableModel.removeRow(selected);
                 controller.deleteTicket(rowId);
             }
@@ -299,15 +304,15 @@ public class TicketGui extends JFrame {
     }
 
     private void newFramePopup(){
-
+        // making the new window and setting this one as it's parent component, also passing controller
         ShowTicketGUI showTicket = new ShowTicketGUI(TicketGui.this,controller,TicketGui.this);
-
-
 
     }
 
     public int getSelectedRowId(){
+        // getting selected row
         int selected = ticketTable.getSelectedRow();
+        // getting the row id for that row and returning it
         int rowId = (int) ticketTable.getValueAt(selected,0);
         return rowId;
     }
