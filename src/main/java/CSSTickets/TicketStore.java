@@ -65,7 +65,6 @@ public class TicketStore {
                 ticket.setTicketId(rowID);
                 allTickets.add(ticket);
             }
-            System.out.println(allTickets);
 
             return allTickets;
 
@@ -128,7 +127,7 @@ public class TicketStore {
                 }
             }
             return matchingTickets;
-        }else{
+        }else if (category == "Email"){
             // looping over all of the tickets and seeing if any of them match the search term, and ignoring case
             for (Ticket ticket : allTickets) {
                 if (ticket.getEmail().toLowerCase().contains(searchTerm.toLowerCase())) {
@@ -137,6 +136,13 @@ public class TicketStore {
             }
             return matchingTickets; // returning a list of matching tickets
 
+        }else {
+            for (Ticket ticket: allTickets){
+                if (ticket.getMemberName().toLowerCase().contains(searchTerm.toLowerCase())){
+                    matchingTickets.add(ticket);
+                }
+            }
+            return matchingTickets;
         }
 
     }
