@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 
 public class TicketGui extends JFrame {
@@ -29,13 +30,16 @@ public class TicketGui extends JFrame {
     private JButton loadAllTicketsButton;
     private JTable ticketTable;
     private JTextArea resolutionTextArea;
-    private JButton saveChangesButton;
 
     // declaring table modle and controller
     DefaultTableModel tableModel;
 
     private Controller controller;
     // gving TicketGui controller so it has access to those methods and the database
+
+    private final Pattern emailPattern = Pattern.compile("\\w+@\\w+\\.\\w{2,}");
+    private final Pattern phoneNumberPatter = Pattern.compile("(\\d{3})\\.?-?(\\d{3}\\.?-?\\d{4})");
+
     TicketGui(Controller controller){
 
         this.controller = controller;
@@ -313,6 +317,20 @@ public class TicketGui extends JFrame {
         int rowId = (int) ticketTable.getValueAt(selected,0);
         return rowId;
     }
+
+    protected boolean validation(String type){
+
+
+        if (type == "email"){
+
+        }else if (type == "phone number"){
+
+        }else {
+
+        }
+        return false;
+    }
+
     }
 
 
