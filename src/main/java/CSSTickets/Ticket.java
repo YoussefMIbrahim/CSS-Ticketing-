@@ -60,8 +60,8 @@ public class Ticket {
         this.description = description;
         this.memberName = memberName;
         this.resolution = resolution;
-        this.date =  date;
     }
+
 
     public int getTicketId() {
         return ticketId;

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class TicketGui extends JFrame {
@@ -29,13 +31,19 @@ public class TicketGui extends JFrame {
     private JButton loadAllTicketsButton;
     private JTable ticketTable;
     private JTextArea resolutionTextArea;
-    private JButton saveChangesButton;
+    private JButton testButton;
 
     // declaring table modle and controller
     DefaultTableModel tableModel;
 
     private Controller controller;
     // gving TicketGui controller so it has access to those methods and the database
+
+    // email regex pattern was taken from here https://stackoverflow.com/questions/14862289/how-to-use-regex-in-java-to-pattern-match
+    private final Pattern emailPattern = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
+    private final Pattern phoneNumberPattern = Pattern.compile("(\\d{3})\\.?-?(\\d{3}\\.?-?\\d{4})");
+    private final Pattern starIdPattern = Pattern.compile("[a-z]{2}\\d{4}[a-z]{2}");
+
     TicketGui(Controller controller){
 
         this.controller = controller;
@@ -81,6 +89,7 @@ public class TicketGui extends JFrame {
                 searchByCategory("Email");
             }
         });
+
 
     }
 
@@ -138,48 +147,26 @@ public class TicketGui extends JFrame {
         // creating a date for when the ticket is added
         Date date =  new Date();
         // getting the rest of the needed info from the gui texfields and areas
-        String clientName = clientNameTextField.getText();
-        String starID = starIdTextField.getText();
-        String email = emailTextField.getText();
-        String phoneNumber = phoneNumberTextField.getText();
-        String machineModel= machineTextField.getText();
-        String description = descriptionTextArea.getText();
-        String memberName = memberTextField.getText();
-        String resolution = resolutionTextArea.getText();
+        String clientName = clientNameTextField.getText().strip();
+        String starID = starIdTextField.getText().strip();
+        String email = emailTextField.getText().strip();
+        String phoneNumber = phoneNumberTextField.getText().strip();
+        String machineModel= machineTextField.getText().strip();
+        String description = descriptionTextArea.getText().strip();
+        String memberName = memberTextField.getText().strip();
+        String resolution = resolutionTextArea.getText().strip();
 
-        // making sure none of the required fields are left blank
-        if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
-                || memberName.isEmpty()){
-            JOptionPane.showMessageDialog(this,"Please fill out all the required fields.");
-        }else{
+        // making sure none of the required fields are left blan
+        Boolean valid = justAlotOfValidationSadness(clientName,starID,email,phoneNumber,machineModel,description,
+                memberName,resolution, date);
 
-            if (resolution.isEmpty()){
-
-                Ticket ticket =  new Ticket(clientName,email,machineModel,description,memberName,date);
-                ticket.setStarId(starID);
-                controller.addTicket(ticket);
-                showAllTickets();
-            }else{
-                Ticket ticket = new Ticket(clientName,email,machineModel,description,memberName,resolution,date);
-                ticket.setStarId(starID);
-                controller.addTicket(ticket);
-                showAllTickets();
-            }
-
-            // clearing all the fields after a successful entry
-            clientNameTextField.setText("");
-            starIdTextField.setText("");
-            emailTextField.setText("");
-            phoneNumberTextField.setText("");
-            machineTextField.setText("");
-            descriptionTextArea.setText("");
-            memberTextField.setText("");
-            resolutionTextArea.setText("");
-            // sending a message to let user know that the ticket has been added (might remove )
-            JOptionPane.showMessageDialog(this,"Ticket added successfully");
+        if (valid){
+            Ticket ticket = new Ticket(clientName, starID, email, phoneNumber, machineModel, description, memberName,
+                    resolution, date);
+            controller.addTicket(ticket);
+            showAllTickets();
+            clearFields();
         }
-
-
     }
 
     private void searchByCategory(String category){
@@ -313,6 +300,94 @@ public class TicketGui extends JFrame {
         int rowId = (int) ticketTable.getValueAt(selected,0);
         return rowId;
     }
+
+    protected boolean validationRegEx(String type){
+
+
+        if (type == "email"){
+
+            Matcher matcher = emailPattern.matcher(emailTextField.getText().strip());
+            boolean email = matcher.matches();
+
+            return email;
+
+        }else if (type == "phone number"){
+
+            Matcher matcher = phoneNumberPattern.matcher(phoneNumberTextField.getText().strip());
+            boolean phoneNum = matcher.matches();
+
+            return phoneNum;
+        }else {
+
+            Matcher matcher = starIdPattern.matcher(starIdTextField.getText().strip());
+
+
+            boolean b = matcher.matches();
+
+            return b;
+        }
+
+    }
+
+    private void clearFields(){
+        // clearing all the fields after a successful entry
+        clientNameTextField.setText("");
+        starIdTextField.setText("");
+        emailTextField.setText("");
+        phoneNumberTextField.setText("");
+        machineTextField.setText("");
+        descriptionTextArea.setText("");
+        memberTextField.setText("");
+        resolutionTextArea.setText("");
+        // sending a message to let user know that the ticket has been added (might remove )
+        JOptionPane.showMessageDialog(this,"Ticket added successfully");
+    }
+
+    protected Boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
+                                                String description,String memberName,String resolution,Date date){
+        if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
+                || memberName.isEmpty()){
+            JOptionPane.showMessageDialog(this,"Please fill out all the required fields.");
+        }else if(!validationRegEx("email")){
+            JOptionPane.showMessageDialog(this,"Invalid Email adress");
+        }else{
+            if (!starID.strip().isEmpty()) {
+                if (!validationRegEx("star id")) {
+                    JOptionPane.showMessageDialog(this, "Invalid StarID");
+                } else {
+                    if (!phoneNumber.strip().isEmpty()){
+                        if (!validationRegEx("phone number")) {
+                            JOptionPane.showMessageDialog(this, "Invalid Phone Number");
+                        }else {
+                            return true;
+                        }
+                    }
+                    return true;
+                }
+            }else if (!phoneNumber.strip().isEmpty()){
+                if (!validationRegEx("phone number")){
+                    JOptionPane.showMessageDialog(this,"Invalid Phone Number");
+                }else {
+                    if (!starID.strip().isEmpty()) {
+                        if (!validationRegEx("star id")) {
+                            JOptionPane.showMessageDialog(this, "Invalid StarID");
+                        }else {
+                            return true;
+                        }
+                    }else {
+                        return true;
+                    }
+                }
+            }else {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+
+
     }
 
 
