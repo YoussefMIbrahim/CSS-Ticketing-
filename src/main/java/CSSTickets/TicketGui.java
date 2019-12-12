@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.Vector;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -322,6 +323,11 @@ public class TicketGui extends JFrame {
 
 
         if (type == "email"){
+
+            Matcher matcher = emailPattern.matcher(emailTextField.getText().strip());
+            boolean test = matcher.matches();
+
+            System.out.println(test);
 
         }else if (type == "phone number"){
 
