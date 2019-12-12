@@ -309,25 +309,25 @@ public class TicketGui extends JFrame {
         return rowId;
     }
 
-    protected boolean validationRegEx(String type){
+    protected boolean validationRegEx(String type, String field){
 
 
         if (type == "email"){
 
-            Matcher matcher = emailPattern.matcher(emailTextField.getText().strip());
+            Matcher matcher = emailPattern.matcher(field);
             boolean email = matcher.matches();
 
             return email;
 
         }else if (type == "phone number"){
 
-            Matcher matcher = phoneNumberPattern.matcher(phoneNumberTextField.getText().strip());
+            Matcher matcher = phoneNumberPattern.matcher(field);
             boolean phoneNum = matcher.matches();
 
             return phoneNum;
         }else {
 
-            Matcher matcher = starIdPattern.matcher(starIdTextField.getText().strip());
+            Matcher matcher = starIdPattern.matcher(field);
 
 
             boolean b = matcher.matches();
@@ -355,15 +355,15 @@ public class TicketGui extends JFrame {
         if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
                 || memberName.isEmpty()){
             JOptionPane.showMessageDialog(this,"Please fill out all the required fields.");
-        }else if(!validationRegEx("email")){
+        }else if(!validationRegEx("email",email)){
             JOptionPane.showMessageDialog(this,"Invalid Email adress");
         }else{
             if (!starID.strip().isEmpty()) {
-                if (!validationRegEx("star id")) {
+                if (!validationRegEx("star id",starID)) {
                     JOptionPane.showMessageDialog(this, "Invalid StarID");
                 } else {
                     if (!phoneNumber.strip().isEmpty()){
-                        if (!validationRegEx("phone number")) {
+                        if (!validationRegEx("phone number",phoneNumber)) {
                             JOptionPane.showMessageDialog(this, "Invalid Phone Number");
                         }else {
                             return true;
@@ -372,11 +372,11 @@ public class TicketGui extends JFrame {
                     return true;
                 }
             }else if (!phoneNumber.strip().isEmpty()){
-                if (!validationRegEx("phone number")){
+                if (!validationRegEx("phone number",phoneNumber)){
                     JOptionPane.showMessageDialog(this,"Invalid Phone Number");
                 }else {
                     if (!starID.strip().isEmpty()) {
-                        if (!validationRegEx("star id")) {
+                        if (!validationRegEx("star id",starID)) {
                             JOptionPane.showMessageDialog(this, "Invalid StarID");
                         }else {
                             return true;
