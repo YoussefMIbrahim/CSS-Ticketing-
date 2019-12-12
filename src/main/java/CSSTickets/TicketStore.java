@@ -1,5 +1,9 @@
 package CSSTickets;
 
+/*
+This class talks to the Database passing info to other classes and gui
+ */
+
 import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;

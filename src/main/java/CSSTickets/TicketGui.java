@@ -7,10 +7,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Date;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,6 +47,9 @@ public class TicketGui extends JFrame {
     // this was also Tom, I'm really bad at regex
     private final Pattern starIdPattern = Pattern.compile("[a-z]{2}\\d{4}[a-z]{2}");
 
+    Map<String,String> patterns = new HashMap<>();
+
+
     TicketGui(Controller controller){
 
         this.controller = controller;
@@ -63,9 +64,8 @@ public class TicketGui extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
-        // todo possibly also add search by club member name to see all they've done
+        // todo sort properly
         // todo save to a file so it's maybe printable
-        // todo find a way to get rid of the id column
         // todo comment validation section
 
         // calling a bunch of mehtods that do things
@@ -352,7 +352,7 @@ public class TicketGui extends JFrame {
         resolutionTextArea.setText("");
     }
 
-    protected Boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
+    protected boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
                                                 String description,String memberName,String resolution){
 
         if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
