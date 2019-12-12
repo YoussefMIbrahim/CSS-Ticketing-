@@ -57,9 +57,10 @@ public class ShowTicketGUI extends JFrame{
 
         saveChangesButton.addActionListener(e -> {
             // running the save changes method then closing this window
-            saveChanges();
-            parentComponent.setEnabled(true);
-            dispose();
+            if (saveChanges()){
+                parentComponent.setEnabled(true);
+                dispose();
+            }
 
         });
 
@@ -82,26 +83,25 @@ public class ShowTicketGUI extends JFrame{
 
     }
 
-    private void saveChanges() {
+    private Boolean saveChanges() {
         // getting row id for the ticket
         int rowId = ticketGui.getSelectedRowId();
 
         // getting all the text fields for any possible changes
-        String clientName = clientNameTextField.getText();
-        String starID = starIdTextField.getText();
-        String email = emailTextField.getText();
-        String phoneNumber = phoneNumberTextField.getText();
-        String machineModel = deviceModelTextField.getText();
-        String description = descriptionTextArea.getText();
-        String memberName = clubMemberNameTextField.getText();
-        String resolution = resolutionTextArea.getText();
+        String clientName = clientNameTextField.getText().strip();
+        String starID = starIdTextField.getText().strip();
+        String email = emailTextField.getText().strip();
+        String phoneNumber = phoneNumberTextField.getText().strip();
+        String machineModel = deviceModelTextField.getText().strip();
+        String description = descriptionTextArea.getText().strip();
+        String memberName = clubMemberNameTextField.getText().strip();
+        String resolution = resolutionTextArea.getText().strip();
 
         // making sure all the required fields are still filled out
-        if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
-                || memberName.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please make sure the required fields are not empty");
-        } else {
-            // asking if the user want's to make these changes
+        boolean valid = ticketGui.justAlotOfValidationSadness(clientName,starID,email,phoneNumber,machineModel,description,
+                memberName,resolution);
+
+        if (valid){
             if (JOptionPane.showConfirmDialog(this, "Are you sure you want to save these changes?",
                     "Save", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
 
@@ -110,9 +110,10 @@ public class ShowTicketGUI extends JFrame{
                 ticket.setTicketId(rowId);
 
                 controller.updateTicket(ticket);
-
+                ticketGui.showAllTickets();
+                return true;
             }
         }
-
+        return false;
     }
 }
