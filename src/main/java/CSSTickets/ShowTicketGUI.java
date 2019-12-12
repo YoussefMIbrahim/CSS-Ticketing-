@@ -15,6 +15,7 @@ public class ShowTicketGUI extends JFrame{
     private JButton exitButton;
     private JButton saveChangesButton;
     private JTextField clubMemberNameTextField;
+    private JButton writeToFileButton;
 
     private Controller controller;
     private TicketGui ticketGui;
