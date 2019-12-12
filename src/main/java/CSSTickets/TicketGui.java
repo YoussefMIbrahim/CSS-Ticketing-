@@ -140,7 +140,7 @@ public class TicketGui extends JFrame {
         }
     }
 
-    private void showAllTickets(){
+    protected void showAllTickets(){
         // getting all the tickets from controller and passing them to the set table method
         List<Ticket> tickets = controller.loadAllTicketsFromTicketStore();
 
@@ -164,7 +164,7 @@ public class TicketGui extends JFrame {
 
         // making sure none of the required fields are left blan
         Boolean valid = justAlotOfValidationSadness(clientName,starID,email,phoneNumber,machineModel,description,
-                memberName,resolution, date);
+                memberName,resolution);
 
         if (valid){
             Ticket ticket = new Ticket(clientName, starID, email, phoneNumber, machineModel, description, memberName,
@@ -350,7 +350,7 @@ public class TicketGui extends JFrame {
     }
 
     protected Boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
-                                                String description,String memberName,String resolution,Date date){
+                                                String description,String memberName,String resolution){
 
         if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
                 || memberName.isEmpty()){
