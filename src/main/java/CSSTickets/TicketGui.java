@@ -91,8 +91,10 @@ public class TicketGui extends JFrame {
                 searchByCategory("Description");
             }else if (searchByComboBox.getSelectedItem() == "Name"){
                 searchByCategory("Name");
-            }else{
+            }else if (searchByComboBox.getSelectedItem() == "Email"){
                 searchByCategory("Email");
+            }else {
+                searchByCategory("Club Member");
             }
         });
 
@@ -119,6 +121,7 @@ public class TicketGui extends JFrame {
         searchByList.add("Name");
         searchByList.add("Description");
         searchByList.add("Email");
+        searchByList.add("Club Member");
 
 
         // looping over the list and adding each item to combo box
