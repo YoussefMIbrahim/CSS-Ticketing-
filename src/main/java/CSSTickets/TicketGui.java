@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -39,9 +41,12 @@ public class TicketGui extends JFrame {
     private Controller controller;
     // gving TicketGui controller so it has access to those methods and the database
 
+    // made all of these final because they should never be changing
     // email regex pattern was taken from here https://stackoverflow.com/questions/14862289/how-to-use-regex-in-java-to-pattern-match
     private final Pattern emailPattern = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
+    // phone number was from Tom
     private final Pattern phoneNumberPattern = Pattern.compile("(\\d{3})\\.?-?(\\d{3}\\.?-?\\d{4})");
+    // this was also Tom, I'm really bad at regex
     private final Pattern starIdPattern = Pattern.compile("[a-z]{2}\\d{4}[a-z]{2}");
 
     TicketGui(Controller controller){
@@ -60,7 +65,8 @@ public class TicketGui extends JFrame {
 
         // todo possibly also add search by club member name to see all they've done
         // todo save to a file so it's maybe printable
-        // todo add validation for input
+        // todo find a way to get rid of the id column
+        // todo comment validation section
 
         // calling a bunch of mehtods that do things
         populateComboBoxes();
@@ -166,6 +172,8 @@ public class TicketGui extends JFrame {
             controller.addTicket(ticket);
             showAllTickets();
             clearFields();
+            // sending a message to let user know that the ticket has been added (might remove )
+            JOptionPane.showMessageDialog(this,"Ticket added successfully");
         }
     }
 
@@ -339,12 +347,11 @@ public class TicketGui extends JFrame {
         descriptionTextArea.setText("");
         memberTextField.setText("");
         resolutionTextArea.setText("");
-        // sending a message to let user know that the ticket has been added (might remove )
-        JOptionPane.showMessageDialog(this,"Ticket added successfully");
     }
 
     protected Boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
                                                 String description,String memberName,String resolution,Date date){
+
         if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
                 || memberName.isEmpty()){
             JOptionPane.showMessageDialog(this,"Please fill out all the required fields.");

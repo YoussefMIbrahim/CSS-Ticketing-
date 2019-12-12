@@ -1,6 +1,8 @@
 package CSSTickets;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 
 public class ShowTicketGUI extends JFrame{
@@ -15,6 +17,7 @@ public class ShowTicketGUI extends JFrame{
     private JButton exitButton;
     private JButton saveChangesButton;
     private JTextField clubMemberNameTextField;
+    private JButton writeToFileButton;
 
     private Controller controller;
     private TicketGui ticketGui;
@@ -30,6 +33,18 @@ public class ShowTicketGUI extends JFrame{
         setVisible(true);
         // making the parent gui inaccessible while this one is active
         parentComponent.setEnabled(false);
+        // setting closing operation to do nothing
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        // adding a window listener to close button to set focus back to parent component before disposing
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                parentComponent.setEnabled(true);
+                dispose();
+            }
+        });
+
 
         // calling a method to set the data for the gui
         setDataForTicket();
@@ -47,7 +62,6 @@ public class ShowTicketGUI extends JFrame{
             dispose();
 
         });
-
 
     }
 
