@@ -1,5 +1,8 @@
 package CSSTickets;
-
+/*
+everything that has to do with the gui is her, buttons and all that. passes info through controller to get to
+other classes.
+ */
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -60,7 +63,6 @@ public class TicketGui extends JFrame {
         setVisible(true);
         setPreferredSize(new Dimension(800,500));
         pack();
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 
@@ -371,8 +373,9 @@ public class TicketGui extends JFrame {
                         }else {
                             return true;
                         }
+                    }else {
+                        return true;
                     }
-                    return true;
                 }
             }else if (!phoneNumber.strip().isEmpty()){
                 if (!validationRegEx("phone number",phoneNumber)){
