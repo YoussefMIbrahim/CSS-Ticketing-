@@ -354,7 +354,7 @@ public class TicketGui extends JFrame {
         resolutionTextArea.setText("");
     }
 
-    protected Boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
+    protected boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
                                                 String description,String memberName,String resolution){
 
         if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
@@ -373,8 +373,9 @@ public class TicketGui extends JFrame {
                         }else {
                             return true;
                         }
+                    }else {
+                        return true;
                     }
-                    return true;
                 }
             }else if (!phoneNumber.strip().isEmpty()){
                 if (!validationRegEx("phone number",phoneNumber)){
