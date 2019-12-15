@@ -76,8 +76,7 @@ public class TicketGui extends JFrame {
         configureTableModel();
 
         showAllTickets();
-        mouseListenerStuff();
-
+        rightClickMenu();
         submitButton.addActionListener(e -> {
             addNewTicket();
 
@@ -168,7 +167,7 @@ public class TicketGui extends JFrame {
         String resolution = resolutionTextArea.getText().strip();
 
         // making sure none of the required fields are left blan
-        Boolean valid = justAlotOfValidationSadness(clientName,starID,email,phoneNumber,machineModel,description,
+        Boolean valid = fieldValidation(clientName,starID,email,phoneNumber,machineModel,description,
                 memberName,resolution);
 
         if (valid){
@@ -199,7 +198,7 @@ public class TicketGui extends JFrame {
         }
     }
 
-    private void mouseListenerStuff(){
+    private void rightClickMenu(){
         // creating a new popup menu called rightclickmenu
         JPopupMenu rightClickMenu = new JPopupMenu();
         // creating new menu items to add to the right lick menu
@@ -354,7 +353,7 @@ public class TicketGui extends JFrame {
         resolutionTextArea.setText("");
     }
 
-    protected boolean justAlotOfValidationSadness (String clientName,String starID,String email, String phoneNumber, String machineModel,
+    protected boolean fieldValidation (String clientName,String starID,String email, String phoneNumber, String machineModel,
                                                 String description,String memberName,String resolution){
 
         if (clientName.isEmpty() || email.isEmpty() || machineModel.isEmpty() || description.isEmpty()
