@@ -98,7 +98,7 @@ public class ShowTicketGUI extends JFrame{
         String resolution = resolutionTextArea.getText().strip();
 
         // making sure all the required fields are still filled out
-        boolean valid = ticketGui.justAlotOfValidationSadness(clientName,starID,email,phoneNumber,machineModel,description,
+        boolean valid = ticketGui.fieldValidation(clientName,starID,email,phoneNumber,machineModel,description,
                 memberName,resolution);
 
         if (valid){
