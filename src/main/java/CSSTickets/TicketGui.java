@@ -167,7 +167,7 @@ public class TicketGui extends JFrame {
         String resolution = resolutionTextArea.getText().strip();
 
         // making sure none of the required fields are left blan
-        Boolean valid = fieldValidation(clientName,starID,email,phoneNumber,machineModel,description,
+        boolean valid = fieldValidation(clientName,starID,email,phoneNumber,machineModel,description,
                 memberName,resolution);
 
         if (valid){
@@ -319,24 +319,20 @@ public class TicketGui extends JFrame {
         if (type == "email"){
 
             Matcher matcher = emailPattern.matcher(field);
-            boolean email = matcher.matches();
 
-            return email;
+            return matcher.matches();
 
         }else if (type == "phone number"){
 
             Matcher matcher = phoneNumberPattern.matcher(field);
-            boolean phoneNum = matcher.matches();
 
-            return phoneNum;
+            return matcher.matches();
         }else {
 
             Matcher matcher = starIdPattern.matcher(field);
 
 
-            boolean b = matcher.matches();
-
-            return b;
+            return matcher.matches();
         }
 
     }
