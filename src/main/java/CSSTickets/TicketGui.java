@@ -67,11 +67,13 @@ public class TicketGui extends JFrame {
 
 
         // todo sort properly
-        // todo save to a file so it's maybe printable
         // todo make validation section better
         // todo maybe print straight from java
         // todo adding the regect patters to a hashmap
-        // todo have a better read me and comments 
+        // todo have a better read me and comments
+        // todo add search by resolution
+        // todo disable editiing for everything
+        //todo maybe add pages
 
         // calling a bunch of mehtods that do things
         populateComboBoxes();
